@@ -16,7 +16,7 @@ interface CollectionDao {
     fun getAllCollections(): Flow<List<Collection>>
 
     @Query("SELECT * FROM collection WHERE id = :collectionId")
-    suspend fun getCollectionById(collectionId: Int): Flow<Collection>
+    fun getCollectionById(collectionId: Int): Flow<Collection>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addCollection(collection: Collection)
