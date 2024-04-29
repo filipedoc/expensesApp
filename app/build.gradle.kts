@@ -70,4 +70,6 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.datastore.preferences.android)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.navigation.compose)
+
 }

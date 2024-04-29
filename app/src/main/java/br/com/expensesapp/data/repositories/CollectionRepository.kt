@@ -2,10 +2,12 @@ package br.com.expensesapp.data.repositories
 
 import br.com.expensesapp.data.CollectionDao
 import br.com.expensesapp.data.models.Collection
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class CollectionRepository @Inject constructor(private val collectionDao: CollectionDao){
+@ViewModelScoped
+class CollectionRepository @Inject constructor (private val collectionDao: CollectionDao){
 
     val getAllCollections: Flow<List<Collection>> = collectionDao.getAllCollections()
 

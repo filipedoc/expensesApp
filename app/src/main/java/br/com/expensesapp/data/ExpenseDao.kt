@@ -19,6 +19,9 @@ interface ExpenseDao {
     @Query("SELECT * FROM expense WHERE id = :expenseId")
     fun getExpenseById(expenseId: Int): Flow<Expense>
 
+    @Query("SELECT * FROM expense JOIN collection ON expense.collectionId = collectionId")
+    fun getExpenseByCollectionId(collectionId: Int): Flow<List<Expense>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addExpense(expense: Expense)
 
