@@ -1,6 +1,5 @@
 package br.com.expensesapp.screens
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,22 +18,32 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import br.com.expensesapp.R
 import br.com.expensesapp.data.TestData
 import br.com.expensesapp.data.models.Collection
+import br.com.expensesapp.viewmodels.CollectionViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionsScreen(
+    collectionViewModel: CollectionViewModel,
     onAddCollection: () -> Unit,
     onCollectionClick: (Collection) -> Unit,
 ) {
+
+    LaunchedEffect(key1 = true){
+        collectionViewModel.getAllCollections()
+    }
+
+    val allCollections = collectionViewModel.allCollections.collectAsState()
+
     Scaffold(
         topBar = {
                  TopAppBar(
@@ -51,21 +60,22 @@ fun CollectionsScreen(
                          } },
                      )
         },
+        content = { innerPadding ->
+            LazyColumn(modifier = Modifier.padding(innerPadding)) {
+                items(TestData.collections){ collection ->
+                    CollectionItem(
+                        collection,
+                        onCollectionClick
+                    )
+                }
+            }
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddCollection) {
                 Icon(Icons.Filled.Add, stringResource(id = R.string.add_collection))
             }
         }
-    ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(TestData.collections){ collection ->
-                CollectionItem(
-                    collection,
-                    onCollectionClick
-                )
-            }
-        }
-    }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -103,8 +113,8 @@ fun CollectionItem(
     }
 }
 
-@Preview
-@Composable
-fun CollectionsScreenPreview() {
-    CollectionsScreen(onCollectionClick = {}, onAddCollection = {})
-}
+//@Preview
+//@Composable
+//fun CollectionsScreenPreview() {
+//    CollectionsScreen(onCollectionClick = {}, onAddCollection = {})
+//}

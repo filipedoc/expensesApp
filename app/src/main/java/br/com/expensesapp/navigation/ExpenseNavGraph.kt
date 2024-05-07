@@ -13,9 +13,11 @@ import br.com.expensesapp.navigation.ExpenseScreens.COLLECTION_DETAIL_SCREEN
 import br.com.expensesapp.screens.CollectionDetailScreen
 import br.com.expensesapp.screens.CollectionsAddScreen
 import br.com.expensesapp.screens.CollectionsScreen
+import br.com.expensesapp.viewmodels.CollectionViewModel
 
 @Composable
 fun ExpenseNavGraph(
+    collectionViewModel: CollectionViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = ExpenseDestinations.COLLECTIONS_ROUTE,
@@ -27,6 +29,7 @@ fun ExpenseNavGraph(
     ) {
         composable(route = ExpenseDestinations.COLLECTIONS_ROUTE){
             CollectionsScreen(
+                collectionViewModel = collectionViewModel,
                 onAddCollection = {
                     navController.navigate(route = ExpenseDestinations.ADD_COLLECTION_ROUTE)
                 },
